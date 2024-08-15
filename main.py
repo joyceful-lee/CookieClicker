@@ -22,9 +22,9 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 topscreen = pygame.surface.Surface((screen_width, screen_height), pygame.SRCALPHA, 32)
 topscreen = topscreen.convert_alpha()
 
-scrollscreen = pygame.surface.Surface((screen_width, screen_height), pygame.SRCALPHA, 32)
+scrollscreen = pygame.surface.Surface((screen_width, screen_height+200), pygame.SRCALPHA, 32)
 scrollscreen = scrollscreen.convert_alpha()
-scrollscreen_display = pygame.surface.Surface((screen_width, screen_height), pygame.SRCALPHA, 32)
+scrollscreen_display = pygame.surface.Surface((screen_width, screen_height+200), pygame.SRCALPHA, 32)
 scrollscreen_display = scrollscreen_display.convert_alpha()
 scroll_rect = scrollscreen.get_rect()
 x1 = scroll_rect[0]
@@ -85,6 +85,31 @@ factory = Store(scrollscreen, img_org['factory_img'], settings['factory_prices']
 factory_bg = Display(scrollscreen_display, img_org['factory_display_images'], img_org['divider_h_scale'], .5, settings['left_width'],
                      settings['center_top'] + (settings['store_display_height'] * 3), 4, False)
 
+bank = Store(scrollscreen, img_org['bank_img'], settings['bank_prices'], settings['multiplier'], False, settings['storeScale'], settings['header_font'],
+                settings['left_width'] + settings['center_width'], settings['center_top'] + (settings['storeOptionHeight'] * 5))
+bank_bg = Display(scrollscreen_display, img_org['bank_display_images'], img_org['divider_h_scale'], .5, settings['left_width'],
+                     settings['center_top'] + (settings['store_display_height'] * 4), 5, False)
+
+temple = Store(scrollscreen, img_org['temple_img'], settings['temple_prices'], settings['multiplier'], False, settings['storeScale'], settings['header_font'],
+                settings['left_width'] + settings['center_width'], settings['center_top'] + (settings['storeOptionHeight'] * 6))
+temple_bg = Display(scrollscreen_display, img_org['temple_display_images'], img_org['divider_h_scale'], .5, settings['left_width'],
+                     settings['center_top'] + (settings['store_display_height'] * 5), 6, False)
+
+wizard = Store(scrollscreen, img_org['wizard_img'], settings['wizard_prices'], settings['multiplier'], False, settings['storeScale'], settings['header_font'],
+                settings['left_width'] + settings['center_width'], settings['center_top'] + (settings['storeOptionHeight'] * 7))
+wizard_bg = Display(scrollscreen_display, img_org['wizard_display_images'], img_org['divider_h_scale'], .5, settings['left_width'],
+                     settings['center_top'] + (settings['store_display_height'] * 6), 7, False)
+
+shipment = Store(scrollscreen, img_org['shipment_img'], settings['shipment_prices'], settings['multiplier'], False, settings['storeScale'], settings['header_font'],
+                settings['left_width'] + settings['center_width'], settings['center_top'] + (settings['storeOptionHeight'] * 8))
+shipment_bg = Display(scrollscreen_display, img_org['shipment_display_images'], img_org['divider_h_scale'], .5, settings['left_width'],
+                     settings['center_top'] + (settings['store_display_height'] * 7), 8, False)
+
+alchemy = Store(scrollscreen, img_org['alchemy_img'], settings['alchemy_prices'], settings['multiplier'], False, settings['storeScale'], settings['header_font'],
+                settings['left_width'] + settings['center_width'], settings['center_top'] + (settings['storeOptionHeight'] * 9))
+alchemy_bg = Display(scrollscreen_display, img_org['alchemy_display_images'], img_org['divider_h_scale'], .5, settings['left_width'],
+                     settings['center_top'] + (settings['store_display_height'] * 8), 9, False)
+
 
 def draw_stats():
     stats_display.draw()
@@ -97,6 +122,11 @@ def draw_default():
     farm_bg.draw(settings['farm_prices'][2], 2)
     mine_bg.draw(settings['mine_prices'][2], 2)
     factory_bg.draw(settings['factory_prices'][2], 1)
+    bank_bg.draw(settings['bank_prices'][2], 1)
+    temple_bg.draw(settings['temple_prices'][2], 1)
+    wizard_bg.draw(settings['wizard_prices'][2], 1)
+    shipment_bg.draw(settings['shipment_prices'][2], 1)
+    alchemy_bg.draw(settings['alchemy_prices'][2], 1)
     screen.blit(scrollscreen_display,
                 (0, settings["scroll_y_center"]))
 
@@ -141,13 +171,17 @@ def drawCookieClickerSection():
 
 
 def drawStore():
-    screen.blit(scrollscreen,
-                (0, settings["scroll_y"]))
+    screen.blit(scrollscreen,(0, settings["scroll_y"]))
     cursor.draw(settings['cursor_prices'][0], settings['count'], 0, img_org['total_cookies'])
     grandma.draw(settings['grandma_prices'][0], settings['count'], 0, img_org['total_cookies'])
     farm.draw(settings['farm_prices'][0], settings['count'], 15, img_org['total_cookies'])
     mine.draw(settings['mine_prices'][0], settings['count'], 100, img_org['total_cookies'])
     factory.draw(settings['factory_prices'][0], settings['count'], 1000, img_org['total_cookies'])
+    bank.draw(settings['bank_prices'][0], settings['count'], 10000, img_org['total_cookies'])
+    temple.draw(settings['temple_prices'][0], settings['count'], 100000, img_org['total_cookies'])
+    wizard.draw(settings['wizard_prices'][0], settings['count'], 1000000, img_org['total_cookies'])
+    shipment.draw(settings['shipment_prices'][0], settings['count'], 10000000, img_org['total_cookies'])
+    alchemy.draw(settings['alchemy_prices'][0], settings['count'], 100000000, img_org['total_cookies'])
 
 
 
@@ -224,6 +258,41 @@ while True:
                 settings['count'] -= settings['factory_prices'][0]
                 settings['factory_prices'][0] = round((settings['factory_prices'][0] * settings['multiplier']))
                 settings['auto_click_persec'] += settings['factory_prices'][1]
+            elif event.button == 1 and bank.rect.collidepoint(pos) and settings['count'] >= settings['bank_prices'][0]:
+                settings['bank_prices'][2] += 1
+                temp = bank_bg.unlock()
+                settings['index'] = max(temp, settings['index'])
+                settings['count'] -= settings['bank_prices'][0]
+                settings['bank_prices'][0] = round((settings['bank_prices'][0] * settings['multiplier']))
+                settings['auto_click_persec'] += settings['bank_prices'][1]
+            elif event.button == 1 and temple.rect.collidepoint(pos) and settings['count'] >= settings['temple_prices'][0]:
+                settings['temple_prices'][2] += 1
+                temp = temple_bg.unlock()
+                settings['index'] = max(temp, settings['index'])
+                settings['count'] -= settings['temple_prices'][0]
+                settings['temple_prices'][0] = round((settings['temple_prices'][0] * settings['multiplier']))
+                settings['auto_click_persec'] += settings['temple_prices'][1]
+            elif event.button == 1 and wizard.rect.collidepoint(pos) and settings['count'] >= settings['wizard_prices'][0]:
+                settings['wizard_prices'][2] += 1
+                temp = wizard_bg.unlock()
+                settings['index'] = max(temp, settings['index'])
+                settings['count'] -= settings['wizard_prices'][0]
+                settings['wizard_prices'][0] = round((settings['wizard_prices'][0] * settings['multiplier']))
+                settings['auto_click_persec'] += settings['wizard_prices'][1]
+            elif event.button == 1 and shipment.rect.collidepoint(pos) and settings['count'] >= settings['shipment_prices'][0]:
+                settings['shipment_prices'][2] += 1
+                temp = shipment_bg.unlock()
+                settings['index'] = max(temp, settings['index'])
+                settings['count'] -= settings['shipment_prices'][0]
+                settings['shipment_prices'][0] = round((settings['shipment_prices'][0] * settings['multiplier']))
+                settings['auto_click_persec'] += settings['shipment_prices'][1]
+            elif event.button == 1 and alchemy.rect.collidepoint(pos) and settings['count'] >= settings['alchemy_prices'][0]:
+                settings['alchemy_prices'][2] += 1
+                temp = alchemy_bg.unlock()
+                settings['index'] = max(temp, settings['index'])
+                settings['count'] -= settings['alchemy_prices'][0]
+                settings['alchemy_prices'][0] = round((settings['alchemy_prices'][0] * settings['multiplier']))
+                settings['auto_click_persec'] += settings['alchemy_prices'][1]
 
     dt = clock.tick() / 1000
     drawBg()
