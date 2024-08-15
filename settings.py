@@ -15,6 +15,8 @@ settings = {
     'header_font': "georgia",
     'sub_font': 'arial',
     'index': 1,
+    'scroll_y': 0,
+    'scroll_y_center': 0,
 
     # Colors
     'black': (0, 0, 0),
@@ -25,7 +27,7 @@ settings = {
     # Values and Cost
 
     'tab': "DEFAULT",
-    'count': 0,
+    'count': 100000000,
     'multiplier': 1.15,
     'auto_click_persec': 0,  # auto click
     'manual_click_current': 1,  # manual click
@@ -38,6 +40,9 @@ settings = {
     # Images
     'cookie_img': pygame.image.load("images/Cookie!!!.png"),
     'wallpaper_img': pygame.image.load("images/Wallpaper.jpg"),
+    'wallpaper_top_img': pygame.image.load("images/wallpaper_top.png"),
+    'wallpaper_left_img': pygame.image.load("images/wallpaper_left.png"),
+    'wallpaper_center_img': pygame.image.load("images/wallpaper_center.png"),
     'divider': pygame.image.load("images/divider.png"),
     'divider_h': pygame.image.load("images/horizontal.png"),
     'stats_greyed': pygame.image.load("images/stats.png"),
@@ -80,6 +85,12 @@ img_org = {
     'total_cookies': settings['count'],
     'wall_scale': pygame.transform.scale(settings['wallpaper_img'], (
         int(settings['wallpaper_img'].get_width() * 0.5), int(settings['wallpaper_img'].get_height() * 0.6))),
+    'wall_top_scale': pygame.transform.scale(settings['wallpaper_top_img'], (
+        int(settings['wallpaper_top_img'].get_width()*1.2), int(settings['wallpaper_top_img'].get_height())*1.2)),
+    'wall_left_scale': pygame.transform.scale(settings['wallpaper_left_img'], (
+        int(settings['wallpaper_left_img'].get_width()*0.52), int(settings['wallpaper_left_img'].get_height())*0.6)),
+    'wall_center_scale': pygame.transform.scale(settings['wallpaper_center_img'], (
+        int(settings['wallpaper_center_img'].get_width()*1.165), int(settings['wallpaper_center_img'].get_height())*1.5)),
     'divider_scale': pygame.transform.scale(settings['divider'], (
         int(settings['divider'].get_width() * 0.5), int(settings['divider'].get_height() * 0.6))),
     'divider_h_scale' : pygame.transform.scale(settings['divider_h'],

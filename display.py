@@ -29,20 +29,22 @@ class Display(pygame.sprite.Sprite):
             if i % 3 == 0:
                 self.screen.blit(self.list[i], (self.rect.x + x_increase, self.rect.y))
             x_increase += 5
+            if self.rect.x + x_increase >= 570:
+                break
 
         x_increase = 0
         for i in range(self.count):
             if i % 3 == 1:
                 self.screen.blit(self.list[i], (self.rect.x + x_increase, self.rect.y + 5))
             x_increase += 5
-            if self.rect.x + x_increase >= 600:
+            if self.rect.x + x_increase >= 570:
                 break
         x_increase = 0
         for i in range(self.count):
             if i % 3 == 2:
                 self.screen.blit(self.list[i], (self.rect.x + x_increase, self.rect.y + 10))
             x_increase += 5
-            if self.rect.x + x_increase >= 600:
+            if self.rect.x + x_increase >= 570:
                 break
 
     def two_row(self):
@@ -50,19 +52,19 @@ class Display(pygame.sprite.Sprite):
         for i in range(self.count):
             if i % 2 == 0:
                 self.screen.blit(self.icon, (self.rect.x + x_increase, self.rect.y+3))
-            x_increase += 15
-
-        x_increase = 5
-        for i in range(self.count):
-            if i % 2 == 1:
+            elif i % 2 == 1:
                 self.screen.blit(self.icon, (self.rect.x + x_increase, self.rect.y+13))
             x_increase += 15
+            if self.rect.x + x_increase >= 570:
+                break
 
     def one_row(self):
         x_increase = 5
         for i in range(self.count):
             self.screen.blit(self.icon, (self.rect.x + x_increase, self.rect.y+3))
             x_increase += 30
+            if self.rect.x + x_increase >= 570:
+                break
 
     def draw(self, count, rows):
         self.count = count

@@ -1,5 +1,6 @@
 import pygame
 import math
+from settings import settings
 
 magnitude = ['', ' Thousand', ' Million', ' Billion', ' Trillion']
 

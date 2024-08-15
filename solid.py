@@ -1,4 +1,5 @@
 import pygame
+from settings import settings
 
 
 # use for GUI decoration
@@ -16,3 +17,12 @@ class Solid(pygame.sprite.Sprite):
 
     def draw(self):
         self.screen.blit(self.image, (self.rect.x, self.rect.y))
+
+    def scroll(self, startpos):
+        pos = pygame.mouse.get_pos()
+        settings['scroll_y'] = startpos[1] - pos[1]
+        y_offset = settings["scroll_y"]
+        self.screen.blit(self.image, (self.rect.x, self.rect.y+y_offset))
+
+    def drawS(self):
+        self.screen.blit(self.image, (self.rect.x, self.rect.y+settings['scroll_y']))
