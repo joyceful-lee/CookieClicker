@@ -1,5 +1,4 @@
 import random
-
 import pygame
 
 
@@ -25,7 +24,7 @@ class Display(pygame.sprite.Sprite):
 
     def three_row(self):
         x_increase = 0
-        for i in range(self.count):
+        for i in range(int(self.count)):
             if i % 3 == 0:
                 self.screen.blit(self.list[i], (self.rect.x + x_increase, self.rect.y))
             x_increase += 5
@@ -33,14 +32,14 @@ class Display(pygame.sprite.Sprite):
                 break
 
         x_increase = 0
-        for i in range(self.count):
+        for i in range(int(self.count)):
             if i % 3 == 1:
                 self.screen.blit(self.list[i], (self.rect.x + x_increase, self.rect.y + 5))
             x_increase += 5
             if self.rect.x + x_increase >= 570:
                 break
         x_increase = 0
-        for i in range(self.count):
+        for i in range(int(self.count)):
             if i % 3 == 2:
                 self.screen.blit(self.list[i], (self.rect.x + x_increase, self.rect.y + 10))
             x_increase += 5
@@ -49,10 +48,15 @@ class Display(pygame.sprite.Sprite):
 
     def two_row(self):
         x_increase = 5
-        for i in range(self.count):
+        for i in range(int(self.count)):
             if i % 2 == 0:
                 self.screen.blit(self.icon, (self.rect.x + x_increase, self.rect.y+3))
-            elif i % 2 == 1:
+            x_increase += 15
+            if self.rect.x + x_increase >= 570:
+                break
+        x_increase = 5
+        for i in range(int(self.count)):
+            if i % 2 == 1:
                 self.screen.blit(self.icon, (self.rect.x + x_increase, self.rect.y+13))
             x_increase += 15
             if self.rect.x + x_increase >= 570:
@@ -60,8 +64,8 @@ class Display(pygame.sprite.Sprite):
 
     def one_row(self):
         x_increase = 5
-        for i in range(self.count):
-            self.screen.blit(self.icon, (self.rect.x + x_increase, self.rect.y+3))
+        for i in range(int(self.count)):
+            self.screen.blit(self.icon, (self.rect.x + x_increase, self.rect.y+7))
             x_increase += 30
             if self.rect.x + x_increase >= 570:
                 break
@@ -86,5 +90,9 @@ class Display(pygame.sprite.Sprite):
 
     def addToGrannie(self, index):
         num = random.randint(1, index)
+        value = 0
+        if len(self.list) > 1:
+            value = random.randint(0, len(self.list)-1)
         self.list.append(pygame.transform.scale(self.image[num], (self.width, self.height)))
+        self.list[value] = pygame.transform.scale(self.image[num], (self.width, self.height))
 

@@ -1,7 +1,5 @@
 import pygame
-
 import store
-from store import Store
 
 
 class Text:

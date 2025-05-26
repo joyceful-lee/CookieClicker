@@ -14,6 +14,11 @@ class Image(pygame.sprite.Sprite):
         self.state = 0
         self.clicked = False
 
+    def update(self, dt):
+        self.rect.y += 1
+        if self.rect.y >= 550:
+            self.rect.y = -50
+
     def draw(self):
         self.screen.blit(self.image, (self.rect.x, self.rect.y))
 

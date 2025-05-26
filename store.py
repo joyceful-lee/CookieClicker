@@ -1,6 +1,5 @@
 import pygame
 import math
-from settings import settings
 
 magnitude = ['', ' Thousand', ' Million', ' Billion', ' Trillion']
 
@@ -26,13 +25,13 @@ class Store(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         # colors
-        self.green = (0, 200, 0)
+        self.green = (0, 225, 0)
         self.red = (174, 0, 0)
         self.screen = screen
 
         # font
         font_name = pygame.font.match_font(font)
-        self.font_size = 14
+        self.font_size = 12
         self.font = pygame.font.Font(font_name, self.font_size)
         self.price_text = self.font.render("", True, self.red)
 
@@ -48,7 +47,7 @@ class Store(pygame.sprite.Sprite):
         self.unblocked = pygame.transform.scale(images[1], (self.width, self.height))
         self.overlay = pygame.Surface((self.width, self.height))
         self.rect = self.blocked.get_rect()
-        self.rect.topleft = (self.x, self.y)
+        self.rect.topleft = (self.x, self.y+3)
 
         # price values
         self.price_current = prices[0]
@@ -61,6 +60,7 @@ class Store(pygame.sprite.Sprite):
         self.money_reached = False
         self.unlocked = False
         self.seen = seen
+
 
     def draw(self, cost, count, seen_point, total_cookies):
         pos = pygame.mouse.get_pos()
@@ -87,11 +87,11 @@ class Store(pygame.sprite.Sprite):
             color = self.red
             # blit different images/text (blocked/red, greyed/red, unblocked/green)
             if not self.unlocked:
-                self.screen.blit(self.blocked, (self.rect.x, self.rect.y))
+                self.screen.blit(self.blocked, (self.x, self.y))
             elif not self.money_reached:
-                self.screen.blit(self.greyed, (self.rect.x, self.rect.y))
+                self.screen.blit(self.greyed, (self.x, self.y))
             else:
-                self.screen.blit(self.unblocked, (self.rect.x, self.rect.y))
+                self.screen.blit(self.unblocked, (self.x, self.y))
                 color = self.green
 
             sig = 0
@@ -99,9 +99,9 @@ class Store(pygame.sprite.Sprite):
                 sig = 1
             self.price_text = self.font.render(number_exchange(cost, sig), True, color)
             price_rect = self.price_text.get_rect()
-            price_rect.topleft = (self.x + 60, self.y + 22)
+            price_rect.topleft = (self.x + 60, self.y + 25)
             self.screen.blit(self.price_text, price_rect)
-            self.screen.blit(self.overlay, (self.rect.x, self.rect.y))
+            self.screen.blit(self.overlay, (self.x, self.y))
         else:
             if total_cookies > seen_point:
                 self.seen = True
